@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { hungarianTextMap } from './TextMapHun';
-import { addQuizEdit, setQuizEdit } from '../reducer/QuizEditSlice';
+import { addNewQuiz, setQuizEdit } from '../reducer/QuizEditSlice';
 import { setLoading } from '../reducer/LoadingSlice';
   
 export default function QuizList() {
@@ -39,13 +39,13 @@ export default function QuizList() {
         {
             field: 'quizName',
             headerName: 'Név',
-            minWidth: "200",
+            flex: 1,
             editable: true,
         },
         {
             field: 'isActive',
             headerName: 'Aktív',
-            minWidth: "50",
+            flex: 1,
             sortable: false,
             renderCell: (params) => {
                 const onClick = async (event) => {  
@@ -107,23 +107,23 @@ export default function QuizList() {
     }
 
     function handleCreate() {
-        setSelectedId(rows.length);
-        dispatch(setLoading(true)); 
+        dispatch(addNewQuiz(true)); 
+        navigate("/quizedit");  
     }
 
     const styles = {
         deleteButton: {
             background: "#ff6900",
             color: "white",
-            width: "100px",
+            display: "none",
             marginRight: "10px",
-            display: "none"
+            width: "100px",       
         },
         createButton: {
             background: "#ff6900",
             color: "white",
-            width: "100px",
             marginRight: "10px",
+            width: "100px",           
         },
         editButtons: {
             display: "flex",
@@ -172,9 +172,9 @@ export default function QuizList() {
                 }}
             />
             <div style={styles.editButtons}>
-{/*                 <Button style={styles.createButton} id="quizCreateButton" variant="contained" onClick={handleCreate}>
-                    Hozzáad
-                </Button> */}
+                <Button style={styles.createButton} id="quizCreateButton" variant="contained" onClick={handleCreate}>
+                    Felvétel
+                </Button>
                 <Button style={styles.deleteButton} id="quizOpenButton" variant="contained" onClick={handleOpen}>
                     Megnyitás
                 </Button>

@@ -2,13 +2,19 @@ import { API_URL } from '../environment/enviroment';
 import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { hungarianTextMap } from './TextMapHun';
 import moment from 'moment'
+import { setQuizResult } from '../reducer/QuizResultSlice';
   
 export default function ResultList() {
 
     const [rows, setRows] = useState([]);
     const [selectedId, setSelectedId] = useState("");
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     var user = JSON.parse(sessionStorage.getItem("user") || "[]")
 
@@ -31,8 +37,12 @@ export default function ResultList() {
     function handleSelectionChange(id) {
         setSelectedId(id[0]);
         var resultDeleteButton = document.getElementById("resultDeleteButton");
+        var resultOpenButton = document.getElementById("resultOpenButton");
         if (resultDeleteButton !== null && resultDeleteButton.style.display === "none") {
             resultDeleteButton.style.display = "flex"; 
+        }
+        if (resultOpenButton !== null && resultOpenButton.style.display === "none") {
+            resultOpenButton.style.display = "flex"; 
         }
     }
 
@@ -79,6 +89,12 @@ export default function ResultList() {
             }
         },
     ];
+    
+    function handleOpen() {
+        dispatch(setQuizResult(rows.find(item => item.id === selectedId)));    
+        navigate("/resultedit"); 
+    }
+
 
     const styles = {
         wrapGrid: {
@@ -87,9 +103,14 @@ export default function ResultList() {
         deleteButton: {
             background: "#ff6900",
             color: "white",
-            width: "100px",
-            display: "none"
+            display: "none",
+            marginRight: "10px",
+            width: "100px",       
         },
+        editButtons: {
+            display: "flex",
+            flexDirection: "row"
+        }
     };
       
     return (
@@ -133,11 +154,16 @@ export default function ResultList() {
                     }
                 }}
             />
-            {user.isAdmin && <Button style={styles.deleteButton} id="resultDeleteButton" variant="contained" onClick={handleDelete}>
-                Törlés
-            </Button>
-            }
-
+            <div style={styles.editButtons}>
+                <Button style={styles.deleteButton} id="resultOpenButton" variant="contained" onClick={handleOpen}>
+                    Megnyitás
+                </Button>
+                {user.isAdmin && 
+                <Button style={styles.deleteButton} id="resultDeleteButton" variant="contained" onClick={handleDelete}>
+                    Törlés
+                </Button>
+                }
+            </div>
         </div>
     );
   }

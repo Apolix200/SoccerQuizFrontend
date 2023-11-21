@@ -10,6 +10,7 @@ export default function QuizEdit() {
 
     const[currentPage, setCurrentPage] = useState(0);
     const quiz = useSelector(state => state.quizEdit);
+
     const pageSize = 5;
 
     const dispatch = useDispatch();
@@ -19,33 +20,34 @@ export default function QuizEdit() {
   
     useEffect(() => {
         dispatch(setLoading(false));   
-        if(quiz.value.length === 0) {
+        if(quiz.value.length === 0 && !quiz.new) {
             navigate("/admin");
         }
     }, [quiz, navigate, dispatch]);
 
-    if(quiz.value.length === 0) {
-        return null;
-    }
-
     async function handleSave() {
-        try {
-            const response = await fetch(API_URL +'/api/Quiz', {
-                method: 'PUT',
-                body: JSON.stringify({
-                    quiz: quiz.value,
-                    userId: user.id
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
+        if(quiz.value.questionAndAnswers.length === 0) {
+            navigate("/admin");
+        } 
+        else {
+            try {
+                const response = await fetch(API_URL +'/api/Quiz', {
+                    method: quiz.new ? 'POST' : 'PUT',
+                    body: JSON.stringify({
+                        quiz: quiz.value,
+                        userId: user.id
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });  
+    
+                if(response.ok) {
+                    navigate("/admin");
                 }
-            });       
-
-            if(response.ok) {
-                navigate("/admin");
+            } catch (error) {
+                console.error(error)
             }
-        } catch (error) {
-            console.error(error)
         }
     }
 
@@ -54,7 +56,6 @@ export default function QuizEdit() {
     }
 
     function handlePageChange(event, pageCount) {
-        console.log(pageCount)
         setCurrentPage(pageCount - 1);
     }
 
@@ -145,7 +146,7 @@ export default function QuizEdit() {
                     },
                 }}
             />
-            {quiz.value.questionAndAnswers.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map((parent, i) => (
+            {quiz.value.length !== 0 && quiz.value.questionAndAnswers.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map((parent, i) => (
                 <div style={styles.qnaWrap} key={i}>
                     <h1 style={styles.questionNumber}>{currentPage * pageSize + i + 1} / {quiz.value.questionAndAnswers.length}</h1>
                     <div style={styles.questionWrap} id="qeQnaWrap">
@@ -166,6 +167,26 @@ export default function QuizEdit() {
                                 },
                             }}
                         />
+                        <Button                     
+                            sx={{
+                                background: "white",
+                                border: "solid 3px darkgreen",
+                                color: "green",
+                                fontSize: "20px",
+                                fontFamily: "sans-serif",
+                                fontWeight: "bold",
+                                margin: "15px auto",
+                                width: "5%",
+                                "&:hover": {
+                                    backgroundColor: "green",
+                                    border: "solid 3px darkgreen",
+                                    color: "white",
+                                },
+                            }}
+                            variant="contained" 
+                            onClick={() => dispatch(addQna({currentPage: currentPage * pageSize + i, qna: {question: "Kérdés", answers: ["Válasz 1", "Válasz 2", "Válasz 3", "Válasz 4"], correctAnswer: 0}}))}>
+                            +
+                        </Button>
                         <Button                     
                             sx={{
                                 background: "white",
@@ -269,6 +290,7 @@ export default function QuizEdit() {
                     </div>
                 </div>
             ))}
+            {Math.ceil(quiz.value.questionAndAnswers.length / pageSize) === currentPage + 1 &&
             <div style={styles.answerWrap} id="qeAnswerWrap">
                 <Button                     
                     sx={{
@@ -292,8 +314,9 @@ export default function QuizEdit() {
                     +
                 </Button>
             </div>
+            }
             <Pagination 
-                count={Math.ceil(quiz.value.questionAndAnswers.filter(item => item.correctAnswer !== -1).length / pageSize)} 
+                count={quiz.value.length === 0 ? 0 : Math.ceil(quiz.value.questionAndAnswers.filter(item => item.correctAnswer !== -1).length / pageSize)} 
                 variant="outlined" 
                 size="large" 
                 showFirstButton 

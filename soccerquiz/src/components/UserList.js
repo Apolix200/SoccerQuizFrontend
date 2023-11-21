@@ -43,7 +43,7 @@ export default function UserList() {
         {
             field: 'userName',
             headerName: 'Név',
-            width: '100%',
+            flex: 1,
         },
     ];
 
@@ -52,7 +52,7 @@ export default function UserList() {
             background: "#ff6900",
             color: "white",
             width: "100px",
-            display: "none"
+            display: "none",
         },
     };
       

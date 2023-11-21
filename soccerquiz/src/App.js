@@ -7,6 +7,7 @@ import Result from './pages/Result';
 import Quiz from './pages/Quiz';
 import Admin from "./pages/Admin";
 import QuizEdit from "./pages/QuizEdit";
+import ResultEdit from "./pages/ResultEdit";
 
 export default function App() {
 
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/quizedit" element={<QuizEdit />} />
+          <Route path="/resultedit" element={<ResultEdit />} />
       </Routes>
     </>
   );

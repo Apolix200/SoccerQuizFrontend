@@ -2,15 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     value: [],
+    new: false,
 }
 
 export const quizEditSlice = createSlice({
     name: 'quizEdit',
     initialState,
     reducers: {
-        addQuizEdit: (state, action) => {
-            state.value = action.payload.quiz
-        },
         setQuizEdit: (state, action) => {
             state.value = action.payload
         },
@@ -38,9 +36,13 @@ export const quizEditSlice = createSlice({
         deleteQna: (state, action) => {
             state.value.questionAndAnswers.splice(action.payload, 1);
         },
+        addNewQuiz: (state, action) => {
+            state.new = action.payload;
+            state.value = {id: "", quizName: "Kvíz", questionAndAnswers: [{question: "Kérdés", answers: ["Válasz 1", "Válasz 2", "Válasz 3", "Válasz 4"], correctAnswer: 0}], isActive: false}
+        },
     }
 })
 
-export const { addQuizEdit, setQuizEdit, setQuizName, setQuestion, setCorrectAnswer, addAnswer, setAnswer, deleteAnswer, addQna, deleteQna } = quizEditSlice.actions;
+export const { setQuizEdit, setQuizName, setQuestion, setCorrectAnswer, addAnswer, setAnswer, deleteAnswer, addQna, deleteQna, addNewQuiz } = quizEditSlice.actions;
 
 export default quizEditSlice.reducer
