@@ -12,7 +12,7 @@ export default function ResultEdit() {
     const result = useSelector(state => state.quizResult);
     const navigate = useNavigate();
 
-    var user = JSON.parse(sessionStorage.getItem("user") || "[]")
+    var user = JSON.parse(localStorage.getItem("user") || "[]")
 
     useEffect(() => {
         if(result.value.length === 0) {
@@ -38,32 +38,12 @@ export default function ResultEdit() {
         setCurrentPage(currentPage - 1);
     }
 
-    const handleNextNavigation = async () => {
-        if(quiz.questionAndAnswers.length - 1 === currentPage) {
-            if(window.confirm("Biztos hogy befejezed?")) {
-                try {
-                    const response = await fetch(API_URL +'/api/Result/CalculateResult', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            quiz: quiz,
-                            userId: user.id
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-        
-                    if(response.ok) {
-                        navigate("/result");
-                    }
-                } catch (error) {
-                    console.error(error)
-                }
-            }
-        }
-        else {
-            setCurrentPage(currentPage + 1);
-        }
+    function handleNextNavigation() {
+        setCurrentPage(currentPage + 1);
+    }
+
+    function handleClose() {
+        navigate("/result");
     }
 
     const styles = {
@@ -94,10 +74,37 @@ export default function ResultEdit() {
         }
     };
 
-    var test = false;
-
     return (
         <div style={styles.quizWrap}>
+             <Button                     
+                sx={{
+                    background: "white",
+                    border: "solid 3px #b34900",
+                    color: "#ff6900",
+                    fontSize: "20px",
+                    fontFamily: "sans-serif",
+                    fontWeight: "bold",
+                    margin: "10px 0px",
+                    textTransform: "none",
+                    padding: "10px 5px",
+                    width: "90%",
+                    "&:hover": {
+                        backgroundColor: "#0096FF",
+                        color: "white",
+                    },
+                    "@media (min-width: 480px)": {
+                        width: "45%",
+                    },
+                    "@media (min-width: 1024px)": {
+                        width: "30%",
+                        margin: "10px 100px",
+                    }
+                }}
+                size="large" 
+                variant="contained" 
+                onClick={() => handleClose()}>
+                Bezár
+            </Button>
             <h1 style={styles.currentOfAllPage}>{currentPage + 1} / {quiz.questionAndAnswers.length}</h1>
             <h1 style={styles.question}>{quiz.questionAndAnswers[currentPage].question}</h1>
             {quiz.questionAndAnswers[currentPage].answers.map((element, index) => (  
@@ -112,11 +119,7 @@ export default function ResultEdit() {
                             background: 
                             (index === result.value.answers[currentPage]) ?  
                             ((index === quiz.questionAndAnswers[currentPage].correctAnswer) ? "green" : "red") :
-                            ((index === quiz.questionAndAnswers[currentPage].correctAnswer) ? "lightgreen" : "white"),
-                            border: 
-                            (index === result.value.answers[currentPage]) ?  
-                            ((index === quiz.questionAndAnswers[currentPage].correctAnswer) ? "solid 3px darkgreen" : "solid 3px darkred") :
-                            ((index === quiz.questionAndAnswers[currentPage].correctAnswer) ? "solid 3px green" : "solid 3px #b34900"),
+                            ((index === quiz.questionAndAnswers[currentPage].correctAnswer) ? "lightgreen" : "white"),             
                             fontSize: "20px",
                             fontFamily: "sans-serif",
                             fontWeight: "bold",

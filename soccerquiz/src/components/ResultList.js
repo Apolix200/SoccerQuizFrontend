@@ -16,7 +16,7 @@ export default function ResultList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    var user = JSON.parse(sessionStorage.getItem("user") || "[]")
+    var user = JSON.parse(localStorage.getItem("user") || "[]")
 
     useEffect(() => {
 

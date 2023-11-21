@@ -9,7 +9,7 @@ export default function UserList() {
     const [rows, setRows] = useState([]);
     const [selectedId, setSelectedId] = useState("");
 
-    var user = JSON.parse(sessionStorage.getItem("user") || "[]")
+    var user = JSON.parse(localStorage.getItem("user") || "[]")
 
     useEffect(() => {
         fetch(API_URL +"/api/User?adminId="+ user.id)  

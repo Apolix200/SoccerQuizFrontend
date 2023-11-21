@@ -16,7 +16,7 @@ export default function Navbar() {
     const location = useLocation()
 
     const [anchorEl, setAnchorEl] = useState(null);
-    var user = JSON.parse(sessionStorage.getItem("user") || '[]');
+    var user = JSON.parse(localStorage.getItem("user") || '[]');
 
     if(location.pathname === "/login" || location.pathname === "/register") {
         return null
@@ -43,7 +43,7 @@ export default function Navbar() {
     };
     
     function handleExit() {
-        sessionStorage.removeItem('user');
+        localStorage.removeItem('user');
         setAnchorEl(null);
         navigate("/login");
     };

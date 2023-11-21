@@ -9,7 +9,7 @@ export default function Import() {
     const[importOk, setImportOk] = useState("");
     const formData = new FormData()
 
-    var user = JSON.parse(sessionStorage.getItem("user") || "[]")
+    var user = JSON.parse(localStorage.getItem("user") || "[]")
 
     const handleFileImport = async (event)=> {
         setImportOk("");

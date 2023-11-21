@@ -55,7 +55,7 @@ export default function Login() {
                     setPasswordErrorText("Jelszó helytelen")
                 }
                 else if(response.ok) {
-                    sessionStorage.setItem("user", JSON.stringify(result));
+                    localStorage.setItem("user", JSON.stringify(result));
                     navigate("/home");
                 }
             } catch (error) {

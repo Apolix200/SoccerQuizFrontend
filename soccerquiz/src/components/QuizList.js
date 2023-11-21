@@ -18,7 +18,7 @@ export default function QuizList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    var user = JSON.parse(sessionStorage.getItem("user") || "[]")
+    var user = JSON.parse(localStorage.getItem("user") || "[]")
 
     useEffect(() => {
         fetch(API_URL +"/api/Quiz?adminId="+ user.id)  

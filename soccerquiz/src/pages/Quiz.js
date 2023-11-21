@@ -14,7 +14,7 @@ export default function Quiz() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    var user = JSON.parse(sessionStorage.getItem("user") || "[]")
+    var user = JSON.parse(localStorage.getItem("user") || "[]")
 
     useEffect(() => {
         if(quiz.value.length === 0) {

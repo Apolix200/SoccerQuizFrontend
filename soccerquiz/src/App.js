@@ -11,7 +11,7 @@ import ResultEdit from "./pages/ResultEdit";
 
 export default function App() {
 
-  var user = JSON.parse(sessionStorage.getItem("user") || "[]");
+  var user = JSON.parse(localStorage.getItem("user") || "[]");
 
   return (
     <>

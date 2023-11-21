@@ -16,7 +16,7 @@ export default function QuizEdit() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    var user = JSON.parse(sessionStorage.getItem("user") || "[]")
+    var user = JSON.parse(localStorage.getItem("user") || "[]")
   
     useEffect(() => {
         dispatch(setLoading(false));   
@@ -24,6 +24,10 @@ export default function QuizEdit() {
             navigate("/admin");
         }
     }, [quiz, navigate, dispatch]);
+
+    if(quiz.value.length === 0 ) {
+        return null;
+    }
 
     async function handleSave() {
         if(quiz.value.questionAndAnswers.length === 0) {
@@ -119,8 +123,12 @@ export default function QuizEdit() {
                         border: "solid 3px darkgreen",
                         color: "white",
                     },
-                    "@media (min-width: 1024px)": {
+                    "@media (min-width: 480px)": {
                         width: "45%",
+                    },
+                    "@media (min-width: 1024px)": {
+                        width: "30%",
+                        margin: "10px 100px",
                     }
                 }}
                 size="large" 
@@ -154,7 +162,6 @@ export default function QuizEdit() {
                             label="Kérdés"
                             value={quiz.value.questionAndAnswers[currentPage * pageSize + i].question}
                             multiline={true}
-                            rows={1}
                             onChange={(e) => (dispatch(setQuestion({currentPage: currentPage * pageSize + i, question: e.target.value})))}
                             sx={{
                                 margin: "20px 0px",
@@ -213,8 +220,7 @@ export default function QuizEdit() {
                             <TextField 
                                 label="Válasz"
                                 value={quiz.value.questionAndAnswers[currentPage * pageSize + i].answers[j]}
-                                multiline={true}  
-                                rows={1}               
+                                multiline={true}           
                                 sx={{
                                     margin: "20px 0px",
                                     width: "80%",
@@ -290,7 +296,7 @@ export default function QuizEdit() {
                     </div>
                 </div>
             ))}
-            {Math.ceil(quiz.value.questionAndAnswers.length / pageSize) === currentPage + 1 &&
+            {(Math.ceil(quiz.value.questionAndAnswers.length / pageSize) === currentPage + 1 || Math.ceil(quiz.value.questionAndAnswers.length / pageSize) === 0) &&
             <div style={styles.answerWrap} id="qeAnswerWrap">
                 <Button                     
                     sx={{
