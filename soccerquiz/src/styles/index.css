@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #DFE0DF;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#userSiteWrap {
+  background: #ff6900;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#userForm {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 5px 10px 5px #b34900;
+  margin: auto;
+  margin-top: 100px;
+  padding: 20px 0px;
+  text-align: center;
+  width: 100%;
+}
+
+#quizButton {
+  background: #ff6900;
+  color: white;
+  min-width: 50%;
+  padding: 10px;
+  margin: 10px auto;
+}
+
+.MuiDataGrid-filterForm {
+  flex-direction: column;
+}
+
+.MuiFormControl-root.MuiDataGrid-filterFormColumnInput,
+.MuiFormControl-root.MuiDataGrid-filterFormOperatorInput,
+.MuiFormControl-root.MuiDataGrid-filterFormValueInput,
+.MuiFormControl-root.MuiDataGrid-filterFormDeleteIcon {
+  width: 80%;
+  margin: auto;
+  padding: 10px 0px;
+}
+
+#qeQnaWrap {
+  width: 90%;
+}
+#qeAnswerWrap {
+  width: 90%;
+}
+
+@media only screen and (min-width: 480px) {
+  #userForm {
+    width: 60%;
+  }
+  #quizButton {
+    min-width: 35%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  #userForm {
+    width: 40%;
+  }
+  #quizButton {
+    min-width: 20%;
+  }
+  #qeQnaWrap {
+    width: 60%;
+  }
+  #qeAnswerWrap {
+    width: 50%;
+  }
+}

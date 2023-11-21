@@ -1,0 +1,77 @@
+#navbar {
+    background-color: #ff6900;
+    border-bottom: #b34900 solid 3px;
+    color: white;
+    display: flex;
+    height: 64px;
+    justify-content: space-between;
+    padding: 0px 70px;
+}
+#navbar p {
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+#nbLinks{
+    display: none;
+    flex-direction: column;
+}
+#nbLinks #nbLink {
+    background-color: #ff6900;
+    border-bottom: #b34900 solid 3px;
+    border-left: #b34900 solid 3px;
+    color: white;
+    font-size: 30px;
+    padding: 10px 20px;
+    text-decoration: none;
+
+}
+#nbLinks #nbLink:hover {
+    background-color: #b34900;
+}
+
+#nbMenuIcon {
+    border-radius: 0%;
+    padding: 20px;
+    position: absolute;
+    width: 60px;
+}
+#nbMenuIcon:hover {
+    background-color: #b34900;
+}
+
+#nbAccountIcon {
+    border-radius: 0%;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+}
+#nbAccountIcon:hover {
+    background-color: #b34900;
+}
+
+.nbLargeSvg {
+    color: white;
+    transform: scale(2);
+}
+
+
+#nbCircleLoadingWrap {
+    background-color: #111111;
+    border: black solid 3px;
+    height: 100%;
+    left: 0%;
+    opacity: 0.5;
+    position: fixed;
+    top: 0%;
+    text-align: center;
+    z-index: 7;
+    width: 100%;  
+}
+
+
+#nbCircleLoading {
+    margin-top: 200px;
+}
