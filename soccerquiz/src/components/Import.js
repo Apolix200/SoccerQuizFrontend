@@ -42,6 +42,13 @@ export default function Import() {
    
     const styles = {
         importWrap: {
+            display: "flex",
+            flexDirection: "column",
+            margin: "auto",
+            textAlign: "center",
+            width: "90%",
+        },
+        formWrap: {
             width: "100%",
             textAlign: "center"
         },
@@ -58,18 +65,46 @@ export default function Import() {
             position: 'absolute',
             width: "150px",
         },
+        title: {
+            fontSize: "30px",
+            fontFamily: "sans-serif",
+            fontWeight: "bold",
+            textAlign: "left",
+        },
+        description: {
+            fontSize: "20px",
+            fontFamily: "sans-serif",
+            margin: "auto",
+            textAlign: "left",
+            width: "90%"
+        },
     }
 
     return (
-
-        <form style={styles.importWrap}>
-            <Button style={styles.importButton} variant="contained" startIcon={<CloudUploadIcon />}>
-                Importálás
-                <input style={styles.fileInput} onChange={handleFileImport} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
-            </Button>
-            <p>
-             {importOk}
+        <div style={styles.importWrap}>
+            <form style={styles.formWrap}>
+                <Button style={styles.importButton} variant="contained" startIcon={<CloudUploadIcon />}>
+                    Importálás
+                    <input style={styles.fileInput} onChange={handleFileImport} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+                </Button>
+                <p>
+                {importOk}
+                </p>
+            </form>     
+            <p style={styles.title}>Importálási útmutató:</p>
+            <p style={styles.description}>
+                1. Excel tábla neve adja meg a kvíz nevét.<br></br>
+                2. Excel oszlopok: A B C D E<br></br>
+                &emsp; •	A: Id(nem használt)<br></br>
+                &emsp; •	B: Kérdés<br></br>
+                &emsp; •	C: Betűjel(nem használt)<br></br>
+                &emsp; •	D: Válaszok<br></br>
+                &emsp; •	E: Helyes válasz sora<br></br>
+                3. A kérdés nem lóghat túl a válaszok során<br></br>
+                4. Minden egyes talált kérdéstől számított következő 4 sor számít egy elemenek<br></br>
+                5. Egy elem nem lehet hosszab 4 sornál<br></br>
+                6. Az excel fálj formátum xlsx kell hogy legyen<br></br>
             </p>
-        </form>     
+        </div>
     );
 }
