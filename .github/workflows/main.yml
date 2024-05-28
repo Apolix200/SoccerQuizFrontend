@@ -16,22 +16,10 @@ jobs:
       with:
         node-version: 16
 
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
-    - name: initialize Package.json
-      run: npm init
-
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build React App
-      run: npm run build
+    - name: Build React
+      run: | 
+        npm ci
+        npm run build
 
     - name: SSH and run commands
       uses: appleboy/ssh-action@master
