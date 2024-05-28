@@ -18,7 +18,7 @@ jobs:
 
     - name: Build React
       run: | 
-        npm ci
+        npm install
         npm run build
 
     - name: SSH and run commands
