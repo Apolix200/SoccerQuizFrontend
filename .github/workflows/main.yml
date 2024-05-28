@@ -11,6 +11,17 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
+
+    - name: Install Dependencies
+      uses: npm install
+
+    - name: Build React App
+      run: npm run build
+
     - name: SSH and run commands
       uses: appleboy/ssh-action@master
       with:
@@ -19,7 +30,5 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-            mkdir test01
-            cd test01
-            git clone git@github.com:Apolix200/SoccerQuizFrontend.git
+            cp -a ./build/* /var/www/html/
             echo 'Deployment successful to digital ocean' 
