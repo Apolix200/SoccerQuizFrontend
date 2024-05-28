@@ -24,6 +24,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
+    - name: initialize Package.json
+      run: npm init
+
     - name: Install Dependencies
       run: npm install
 
