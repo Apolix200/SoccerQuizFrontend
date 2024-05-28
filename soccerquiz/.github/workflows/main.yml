@@ -16,11 +16,10 @@ jobs:
       with:
         node-version: 16
 
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build React App
-      run: npm run build
+    - name: Build React
+      run: | 
+        npm ci
+        npm run build
 
     - name: SSH and run commands
       uses: appleboy/ssh-action@master
