@@ -11,18 +11,7 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16
-
-    - name: Build React
-      run: | 
-        cd soccerquiz
-        npm install
-        npm run build
-
-    - name: SSH and run commands
+    - name: Connect to Ubuntu and run commands
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
@@ -30,5 +19,6 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-            cp -a ./build/* /var/www/html/
-            echo 'Deployment successful to digital ocean' 
+            mkdir soccerquiztemp
+            cd soccerquiztemp
+            sudo git pull
