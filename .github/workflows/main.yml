@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./soccerquiz
 
     steps:
       - name: Checkout Code
@@ -27,9 +30,7 @@ jobs:
           git config user.email "<>"
 
       - name: Install Dependencies
-        run: | 
-        cd soccerquiz
-        npm install --force
+        run: npm install --force
 
       - name: Log in to Docker Hub
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
@@ -38,7 +39,7 @@ jobs:
         run: docker build --tag soccerquizfrontend .
 
       - name: Tag image
-        run:  docker tag soccerquizfrontend ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest
+        run: docker tag soccerquizfrontend ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest
 
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest
