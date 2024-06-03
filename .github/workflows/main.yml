@@ -36,7 +36,7 @@ jobs:
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Build Docker Image
-        run: docker compose build --tag soccerquizfrontend .
+        run: docker build --tag soccerquizfrontend .
 
       - name: Tag image
         run: docker tag soccerquizfrontend ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest
