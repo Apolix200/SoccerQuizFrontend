@@ -27,7 +27,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose port 3000 or by default port 80 to the outside world
-EXPOSE 3001
+EXPOSE 6000
 
 # Start Nginx when the container is run
 CMD ["nginx", "-g", "daemon off;"]
