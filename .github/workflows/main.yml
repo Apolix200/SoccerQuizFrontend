@@ -53,4 +53,4 @@ jobs:
           script: |
             docker stop soccerquizfrontend || true
             docker rm soccerquizfrontend || true
-            docker run -d --name soccerquizfrontend -p 800:3000 ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest 
+            docker run -d --name soccerquizfrontend -p 6001:3001 ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest 
