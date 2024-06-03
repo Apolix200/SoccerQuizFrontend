@@ -7,8 +7,7 @@ on:
   #   branches: [main]
   # workflow_dispatch:
   #   branches: [main]
-env:
-  REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -55,4 +54,4 @@ jobs:
           script: |
             docker stop soccerquizfrontend || true
             docker rm soccerquizfrontend || true
-            docker run -dit --name soccerquizfrontend -p 800:3000 ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest 
+            docker run -d --name soccerquizfrontend -p 800:3000 ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest 

@@ -5,6 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3000:800'
+      - '800:3000'
     env_file:
       - deploy.env
