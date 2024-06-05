@@ -53,4 +53,6 @@ jobs:
           script: |
             docker stop soccerquizfrontend || true
             docker rm soccerquizfrontend || true
-            docker run -dit --name soccerquizfrontend -p 3000:80 ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest 
+            docker run -d --name soccerquizfrontend -p 3000:80 ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest 
+            docker cp soccerquizfrontend:/app/build/ /var/www/html
+            nginx -s reload
