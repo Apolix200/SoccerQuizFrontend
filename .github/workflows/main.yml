@@ -44,7 +44,6 @@ jobs:
         working-directory: ./soccerquiz
 
     steps:
-
       - name: Checkout Code
         uses: actions/checkout@v3
 
@@ -56,7 +55,7 @@ jobs:
       - name: Login to Droplet and Update Container
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: node-app
+          local: soccerquiz/build/
           remote: /var/www/soccerquiz/html
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
