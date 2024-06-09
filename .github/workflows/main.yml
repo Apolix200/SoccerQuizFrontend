@@ -33,7 +33,7 @@ jobs:
       - name: Login to Droplet and Update Container
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: /home/runner/work/ValidateAzs/ValidateAzs/AzsValidator/build/
+          local: /home/runner/work/ValidateAzs/ValidateAzs/AzsValidator/soccerquiz/build/
           remote: /var/www/soccerquiz/html
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
