@@ -30,10 +30,16 @@ jobs:
         env: 
           CI: false
 
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: soccerquiz/build/
+
       - name: Login to Droplet and Update Container
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: /home/runner/work/ValidateAzs/ValidateAzs/AzsValidator/soccerquiz/build/
+          local: soccerquiz/build/
           remote: /var/www/soccerquiz/html
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
