@@ -23,36 +23,34 @@ jobs:
         with:
           node-version: 18
 
-      - name: setup git config
-        run: |
-          git config user.name "Github Actions Bot"
-          git config user.email "<>"
+      - name: Install Dependencies, Build, Test
+        run: | 
+          npm install 
+          npm run build --if-present
+          npm run test --if-present
 
-      - name: Install Dependencies
-        run: npm install --force
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: .
 
-      - name: Log in to Docker Hub
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
-      - name: Build Docker Image
-        run: docker build --tag soccerquizfrontend .
-
-      - name: Tag image
-        run: docker tag soccerquizfrontend ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest
-
-      - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: node-app
 
       - name: Login to Droplet and Update Container
-        uses: appleboy/ssh-action@master
+        uses: garygrossgarten/github-action-scp@release
         with:
+          local: node-app
+          remote: /var/www/soccerquiz/html
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
-          script: |
-            docker stop soccerquizfrontend || true
-            docker rm soccerquizfrontend || true
-            docker run -d --name soccerquizfrontend -p 3000:80 ${{ secrets.DOCKERHUB_USERNAME }}/soccerquizfrontend:latest 
-            docker cp soccerquizfrontend:/app/build/ /var/www/html
-            nginx -s reload
