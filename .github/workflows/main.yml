@@ -13,8 +13,6 @@ jobs:
     defaults:
       run:
         working-directory: ./soccerquiz
-      env:
-        REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
 
     steps:
       - name: Checkout Code
@@ -31,6 +29,7 @@ jobs:
           npm run build
         env: 
           CI: false
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
 
       - name: Login to Droplet and Update Container
         uses: garygrossgarten/github-action-scp@release
