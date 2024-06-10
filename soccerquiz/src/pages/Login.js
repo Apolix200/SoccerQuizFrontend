@@ -84,7 +84,7 @@ export default function Login() {
     return (
         <div id="userSiteWrap">
             <form id="userForm" onSubmit={handleSubmit}>
-                <h1 style={styles.title}>Belépés Halál</h1>
+                <h1 style={styles.title}>Belépés</h1>
                 <Grid container spacing={2} justifyContent="center" direction="column">
                     <Grid item xs={8}>
                         <TextField 
