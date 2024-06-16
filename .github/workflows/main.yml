@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Dependencies, Build, Test
+      - name: Install Dependencies, Build
         run: | 
           npm install --force
           npm run build
